@@ -1,0 +1,161 @@
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Roboto', sans-serif;
+    }
+
+    body {
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+      background-color: #f4f7fa;
+    }
+
+    .topbar {
+      background-color: #1b2537;
+      color: white;
+      padding: 15px 30px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .topbar .logo {
+    border-radius: 7px;
+    width: 49px;
+    }
+
+    .topbar .search {
+      flex: 1;
+      margin: 0 30px;
+    }
+
+    .topbar .search input {
+    margin-left: 8%;
+    color: white;
+    background: #00000052;
+    width: 17%;
+    padding: 13px 15px;
+    border-radius: 20px;
+    border: none;
+    outline: none;
+    }
+
+    .topbar .user {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .topbar .user img {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+    }
+
+    .content-wrapper {
+      display: flex;
+      flex: 1;
+    }
+
+    .sidebar {
+    width: 20%;
+    background-color: white;
+    padding: 20px;
+    font-weight: bold;
+    }
+
+    .sidebar h2 {
+      margin-bottom: 20px;
+      font-size: 20px;
+      text-align: center;
+    }
+
+    .sidebar ul {
+      list-style: none;
+    }
+
+    .sidebar li {
+      color: gray;
+      margin-bottom: 15px;
+      padding: 10px;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .sidebar ul a{
+      text-decoration-line: none;
+    }
+
+    .sidebar li:hover {
+    background-color: gainsboro;
+      }
+
+    .main {
+      background: #edf2f5;
+      flex: 1;
+      padding: 30px;
+    }
+
+    .cards {
+      display: flex;
+      gap: 20px;
+      margin-bottom: 30px;
+    }
+
+    .card {
+      flex: 1;
+      background-color: white;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    .card h3 {
+      font-size: 24px;
+      color: #333;
+    }
+
+    .card p {
+      margin-top: 10px;
+      color: #777;
+      font-size: 14px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background-color: white;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    th, td {
+      padding: 15px;
+      text-align: left;
+      border-bottom: 1px solid #eee;
+    }
+
+    th {
+      background-color: #f0f0f0;
+    }
+
+    .status {
+      padding: 5px 10px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: bold;
+    }
+
+    .active {
+      background-color: #d4edda;
+      color: #155724;
+    }
+
+    .deactive {
+      background-color: #fff3cd;
+      color: #856404;
+    }
