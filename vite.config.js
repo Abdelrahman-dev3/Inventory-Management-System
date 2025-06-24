@@ -5,7 +5,7 @@ import tailwindcss from '@tailwindcss/vite';
 export default defineConfig({
     plugins: [
         laravel({
-            input: [],
+            input: ['resources/js/placeholder.js'],
             refresh: true,
         }),
         tailwindcss(),
