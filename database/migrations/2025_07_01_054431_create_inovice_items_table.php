@@ -13,12 +13,18 @@ return new class extends Migration
     {
         Schema::create('inovice_items', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('product_id');
-            $table->unsignedBigInteger('category_id');
+            $table->unsignedBigInteger('product_id')->nullable();
+            $table->unsignedBigInteger('category_id')->nullable();
+            $table->unsignedBigInteger('invoice_No'); // id
             $table->integer('quantity'); 
             $table->decimal('price', 10, 2); 
             $table->decimal('total_all', 12, 2); 
             $table->timestamps();
+            
+            $table->foreign('invoice_No')->references('id')->on('inovices')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreign('category_id')->references('id')->on('categories')->onDelete('set null')->onUpdate('cascade');
+            $table->foreign('product_id')->references('id')->on('products')->onDelete('set null')->onUpdate('cascade');
+
         });
     }
 

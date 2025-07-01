@@ -1,10 +1,10 @@
 @extends('layouts.main')
 
-@section('title','Add Purchase')
+@section('title','Update Purchase')
 
 @section('content')
 <div class="container bg-white p-4 rounded shadow">
-    <h5 class="mb-4">Add Purchase</h5>
+    <h5 class="mb-4">Update Purchase</h5>
     <form action="{{ route('purchase.update',$purchase->id) }}" method="post">
     @csrf
     @method('PUT')
@@ -64,7 +64,7 @@
         <tfoot>
             <tr>
                 <td colspan="4" class="text-end fw-bold">Grand Total</td>
-                <td><input class="form-control" name="total_all" id="grandTotal" value="0" readonly></td>
+                <td><input class="form-control" name="total_all" id="grandTotal" value="{{$purchase->total_amount}}" readonly></td>
                 <td></td>
             </tr>
         </tfoot>

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Validator;
 use App\Models\Category;
 use App\Models\Customers;
 use App\Models\Inovice;
@@ -36,37 +37,53 @@ class inoviceController extends Controller
         return view("add_inovice" , [ 'customers' => $customers , 'categories' => $categories , 'products' => $product]);
     }
 
-            function store(Request $request) {
-            // validition
-            foreach ($request->product as $index => $product_id) {
+    function store(Request $request) {
+        // validition
+            $validator = Validator::make($request->all(), [
+        'customer'               => 'required',
+        'description'            => 'nullable|string|max:255',
+        'total_before_discount'  => 'required|numeric|min:0',
+        'discount'               => 'nullable|numeric|min:0',
+        'total_after_discount'   => 'required|numeric|min:0',
+        'paid_Status'            => 'required',
+        'category'               => 'required|array|min:1',
+        'category.*'             => 'required',
+        'product'                => 'required|array|min:1',
+        'product.*'              => 'required',
+        'quantity'               => 'required|array|min:1',
+        'quantity.*'             => 'required|numeric|min:1',
+        'price'                  => 'required|array|min:1',
+        'price.*'                => 'required|numeric|min:0',
+        'total'                  => 'required|array|min:1',
+        'total.*'                => 'required|numeric|min:0',
+    ]);
+
+    if ($validator->fails()) {
+        return redirect()->back()->withErrors($validator)->withInput();
+    }
+        foreach ($request->product as $index => $product_id) {
             $quantity = $request->quantity[$index];
-
             $product =  Product::find($product_id);
-
             $stock = Stock::where('product_id', $product_id)->first();
-
             if (!$stock) {
                 return redirect()->back()->with('error', "The Product Name:$product->product_name Is Not Found In Stock");
             }
-
             if ( ($stock->in_qty - $stock->out_qty) < $quantity) {
                 return redirect()->back()->with('error', "The available quantity for product : $product->product_name is less than required");
             }
-
             $stock->out_qty += $quantity;
             $stock->save();
-
         }
-            // insert
-            $inovice = Inovice::create([
+        // insert
+        $inovice = Inovice::create([
             'customer_id' => $request->customer,
             'discreption' => $request->description,
             'total_before_discount' => $request->total_before_discount,
             'discount' => $request->discount,
             'total_after_discount' => $request->total_after_discount,
             'paid_status' => $request->paid_Status,
-            ]);
-            foreach ($request->category as $index => $category) {
+        ]);
+        foreach ($request->category as $index => $category) {
             Inovice_items::create([
                 'product_id' => $request->product[$index],
                 'category_id' => $category,
@@ -78,25 +95,34 @@ class inoviceController extends Controller
         }
         Transaction::create([
             'type' => 'out',
-            'product_id' => 0,
+            'product_id' => 1, // مش مهم كدا كدا احنا بنجيب عدد الجدول دا بس
             'qty' => 0,
         ]);
-    return redirect()->route('inovice')->with('success', 'Invoice Added Successfully');
+        return redirect()->route('inovice')->with('success', 'Invoice Added Successfully');
     }
 
 
     function destroy($id) {
-        Inovice::destroy($id);
+        $invoice = Inovice::findOrFail($id);
+        foreach ($invoice->items as $item) {
+            $stock = Stock::where('product_id', $item->product_id)->first();
+            if ($stock) {
+                $stock->out_qty -= $item->quantity; 
+                $stock->save();
+            }
+        }
+        $invoice->delete();
+
     return redirect()->route('inovice')->with('success', 'Inovice Deleted Successfully'); 
     }
 
-        function view($id) {
+    function view($id) {
         $invoice = Inovice::with('customer')->where('id', $id)->get();
         $invoice_item = Inovice_items::with('category','product')->where('invoice_No', $id)->get();
         return view('invoice_view', ['invoices' => $invoice , 'invoice_items' => $invoice_item]);
     }
 
-        function edit(Inovice $invoice) {
+    function edit(Inovice $invoice) {
         // customer
         $customers = Customers::select('id', 'customer_name')->get();
         // category
@@ -116,7 +142,7 @@ public function update(Request $request)
         'quantity' => 'required|array',
         'price' => 'required|array',
         'total' => 'required|array',
-        'discount' => 'required|numeric',
+        'discount' => 'nullable|numeric',
         'total_before_discount' => 'required|numeric',
         'total_after_discount' => 'required|numeric',
         'description' => 'nullable|string',

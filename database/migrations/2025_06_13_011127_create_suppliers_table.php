@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('supplier_name');
             $table->string('supplier_mobile');
             $table->string('supplier_email')->unique();
-            $table->text('supplier_address');
+            $table->text('supplier_address')->nullable();
             $table->unsignedBigInteger('user_id')->nullable();
             $table->unsignedBigInteger('inovice_id')->nullable();
             $table->timestamps();

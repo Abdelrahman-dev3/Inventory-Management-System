@@ -34,7 +34,7 @@
           <tr>
             <td style="text-align: center;">{{ $customer->id }}</td>
             <td style="text-align: center;">{{ $customer->customer_name }}</td>
-            <td style="text-align: center;"><img src="{{asset('uploads/customers/' . $customer->customer_image)}}"  width="60" alt="image"></td>
+            <td style="text-align: center;"><img style="border-radius: 50%;" src="{{asset('uploads/customers/' . $customer->customer_image)}}"  width="60" alt="image"></td>
             <td >{{ $customer->email }}</td>
             <td>{{ $customer->address }}</td>
           <td style="text-align: center;display: flex;justify-content: space-evenly;">

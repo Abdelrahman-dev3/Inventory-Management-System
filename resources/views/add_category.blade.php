@@ -11,7 +11,7 @@
         <div class="mb-3 row">
           <label for="categoryName" class="col-sm-2 col-form-label">category Name</label>
           <div class="col-sm-10">
-            <input type="text" name="category" class="form-control" id="categoryName" placeholder="Enter category name">
+            <input type="text" name="category" value="{{old('category')}}" class="form-control" id="categoryName" placeholder="Enter category name">
           </div>
         </div>
         <div class="text-start">

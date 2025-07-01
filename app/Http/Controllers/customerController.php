@@ -84,6 +84,7 @@ class customerController extends Controller
             'customer_name' => 'required',
             'customer_image' => 'file|mimes:jpg,jpeg,png|max:2048',
             'email' => 'email',
+            'address' => 'required',
         ]);
         
         $customer = Customers::find($request->id);

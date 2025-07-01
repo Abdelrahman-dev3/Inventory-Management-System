@@ -48,7 +48,7 @@
 
 
         <div class="text-start">
-          <button type="submit" class="btn btn-info text-white">Add product</button>
+          <button type="submit" class="btn btn-info text-white">Update Product</button>
         </div>
       </form>
     </div>

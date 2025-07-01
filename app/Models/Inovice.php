@@ -19,4 +19,9 @@ class Inovice extends Model
     {
         return $this->belongsTo(Customers::class);
     }
+
+    public function items()
+{
+    return $this->hasMany(Inovice_items::class, 'invoice_No');
+}
 }

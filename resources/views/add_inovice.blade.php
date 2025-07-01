@@ -53,7 +53,7 @@
     <div class="row mb-3">
       <div class="col-md-3">
         <label class="form-label">Discount</label>
-        <input type="number" name="discount" oninput="applyDiscount()" id="discountField" class="form-control" placeholder="Discount">
+        <input type="number" name="discount" oninput="applyDiscount()" value="{{old('discount')}}" id="discountField" class="form-control" placeholder="Discount">
       </div>
       <div class="col-md-3">
         <label class="form-label">Grand Total</label>
@@ -67,7 +67,7 @@
 
     <div class="mb-3">
       <label class="form-label">Description</label>
-      <textarea name="description" class="form-control"></textarea>
+      <textarea name="description" class="form-control">{{old('description')}}</textarea>
     </div>
 
     <div class="row mb-3">
@@ -166,8 +166,20 @@ function addRow() {
 document.addEventListener("click", function(e) {
   if (e.target.classList.contains("delete-btn")) {
     e.target.closest("tr").remove();
-    // calcGrandTotal();
+    calcGrandTotal();
   }
 });
+    @if ($errors->any())
+        toastr.options = {
+            "closeButton": true,
+            "progressBar": true,
+            "timeOut": "7000",
+            "extendedTimeOut": "3000"   
+        };
+
+        @foreach ($errors->all() as $error)
+            toastr.error("{{ $error }}");
+        @endforeach
+    @endif
 </script>
 @endsection

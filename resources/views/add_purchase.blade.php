@@ -132,13 +132,6 @@ document.addEventListener("click", function(e) {
     calcGrandTotal();
   }
 });
-</script>
-@endsection
-
-
-
-@section('script')
-    <script>
     @if ($errors->any())
         toastr.options = {
             "closeButton": true,

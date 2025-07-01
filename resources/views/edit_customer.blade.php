@@ -1,10 +1,10 @@
 @extends('layouts.main')
-@section('title', 'Add Customer')
+@section('title', 'Update Customer')
 
 @section('content')
   <div class="container my-5">
     <div class="card shadow p-4">
-      <h4 class="mb-4">Add Customer Page</h4>
+      <h4 class="mb-4">Update Customer Page</h4>
       <form method="POST" action="{{route('customer.update')}}" enctype="multipart/form-data">
         @csrf
         @method('PUT')
@@ -34,7 +34,7 @@
           </div>
         </div>
         <div class="text-start">
-          <input value="Add Customer" type="submit" class="btn btn-info text-white">
+          <input value="Update Customer" type="submit" class="btn btn-info text-white">
         </div>
       </form>
     </div>

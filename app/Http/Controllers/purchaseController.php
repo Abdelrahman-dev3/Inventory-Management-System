@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use Illuminate\Support\Facades\Validator;
 use App\Models\Category;
 use App\Models\Product;
 use App\Models\Purchase;
@@ -39,7 +39,28 @@ class purchaseController extends Controller
         return view("add_purchase" , ['suppliers' => $suppliers  , 'categories' => $categories , 'products' => $product ]);
     }
 
-        function store(Request $request) {
+    function store(Request $request) {
+
+    $validator = Validator::make($request->all(), [
+        'supplier'       => 'required',
+        'total_all'      => 'required|numeric|min:0',
+        'description'    => 'nullable|string|max:255',
+        'category'       => 'required|array|min:1',
+        'category.*'     => 'required',
+        'product'        => 'required|array|min:1',
+        'product.*'      => 'required',
+        'quantity'       => 'required|array|min:1',
+        'quantity.*'     => 'required|numeric|min:1',
+        'price'          => 'required|array|min:1',
+        'price.*'        => 'required|numeric|min:0',
+        'total'          => 'required|array|min:1',
+        'total.*'        => 'required|numeric|min:0',
+    ]);
+
+    if ($validator->fails()) {
+        return redirect()->back()->withErrors($validator)->withInput();
+    }
+
         DB::beginTransaction();
         try {
             $purchase = Purchase::create([
