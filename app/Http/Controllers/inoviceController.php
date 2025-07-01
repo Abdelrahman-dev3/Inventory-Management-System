@@ -103,15 +103,7 @@ class inoviceController extends Controller
 
 
     function destroy($id) {
-        $invoice = Inovice::findOrFail($id);
-        foreach ($invoice->items as $item) {
-            $stock = Stock::where('product_id', $item->product_id)->first();
-            if ($stock) {
-                $stock->out_qty -= $item->quantity; 
-                $stock->save();
-            }
-        }
-        $invoice->delete();
+        Inovice::destroy($id);
 
     return redirect()->route('inovice')->with('success', 'Inovice Deleted Successfully'); 
     }

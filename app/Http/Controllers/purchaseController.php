@@ -113,8 +113,8 @@ class purchaseController extends Controller
     }
 
     function destroy($id) {
-        Product::destroy($id);
-    return redirect()->route('purchase')->with('success', 'Product Deleted Successfully'); 
+        Purchase::destroy($id);
+    return redirect()->route('purchase')->with('success', 'Purchase Deleted Successfully'); 
     }
 
     function view($id) {
